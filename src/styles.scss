@@ -1,0 +1,128 @@
+:root {
+  // ... existing variables ...
+  --surface-card: #ffffff; // Light theme
+}
+
+// For dark theme (if applicable)
+[data-theme="dark"] {
+  // ... existing dark theme variables ...
+  --surface-card: #1e1e1e; // Dark theme
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+  to {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.5),
+      0 0 30px rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: "Pro Lamina";
+  src: url("/assets/fonts/ProLamina.ttf") format("truetype"),
+    url("/assets/fonts/ProLamina.woff") format("woff"),
+    url("/assets/fonts/ProLamina.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Gravity;
+  src: url("/assets/fonts/gravity-regular.otf") format("opentype"),
+    url("/assets/fonts/gravity-bold.otf") format("opentype"),
+    url("/assets/fonts/gravity-italic.otf") format("opentype"),
+    url("/assets/fonts/gravity-light.otf") format("opentype"),
+    url("/assets/fonts/gravity-bolditalic.otf") format("opentype"),
+    url("/assets/fonts/gravity-ultralight.otf") format("opentype"),
+    url("/assets/fonts/gravity-ultralightitalic.otf") format("opentype");
+  font-display: swap;
+}
+
+@keyframes game-alert {
+  0% {
+    border: 5em solid #db222a;
+  }
+  50% {
+    border: 5em solid rgba(219, 34, 42, 0.5);
+  }
+  100% {
+    border: 5em solid #db222a;
+  }
+}
+
+html,
+body {
+  height: 100%;
+  font-family: "Gravity", sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: #2c2c34;
+  overflow: hidden;
+}
+
+.button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  position: relative;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.3);
+    animation: glow 1s ease-in-out infinite alternate;
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: none;
+    animation: none;
+  }
+}
+
+.game-alert {
+  border: 5em solid transparent;
+
+  &.active {
+    animation: game-alert 2s infinite;
+  }
+}
+
+.game-alert-controls {
+  position: absolute;
+  top: 23px;
+  right: 80px;
+  display: flex;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.game-alert-countdown {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 1em;
+  border-radius: 0.5em;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  z-index: 1000;
+}
+
+.game-alert-volume {
+  width: 100px;
+  margin: 0 10px;
+  vertical-align: middle;
+}

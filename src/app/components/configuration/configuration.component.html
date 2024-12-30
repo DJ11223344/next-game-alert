@@ -1,0 +1,40 @@
+<section
+  class="configuration-container"
+  role="region"
+  aria-label="Application Configuration"
+>
+  <h2>Configuration</h2>
+
+  <div class="config-section">
+    <h3>Theme</h3>
+    <div class="theme-toggle">
+      <button
+        [class.active]="theme() === 'light'"
+        (click)="updateTheme('light')"
+        aria-label="Switch to light theme"
+      >
+        Light
+      </button>
+      <button
+        [class.active]="theme() === 'dark'"
+        (click)="updateTheme('dark')"
+        aria-label="Switch to dark theme"
+      >
+        Dark
+      </button>
+    </div>
+  </div>
+
+  <div class="config-section">
+    <h3>Language</h3>
+    <select
+      [value]="language()"
+      (change)="updateLanguage($event)"
+      aria-label="Select language"
+    >
+      <option value="en">English</option>
+      <option value="es">Español</option>
+      <option value="fr">Français</option>
+    </select>
+  </div>
+</section>

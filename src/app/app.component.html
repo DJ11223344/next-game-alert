@@ -1,0 +1,10 @@
+<!-- <app-navigation></app-navigation> -->
+
+<div
+  [gameAlert]="shouldShowGameAlert"
+  (gameAlertChange)="shouldShowGameAlert = $event"
+  [countdownSeconds]="10"
+>
+  <button (click)="toggleGameAlert()">Toggle Game Alert</button>
+  <router-outlet></router-outlet>
+</div>

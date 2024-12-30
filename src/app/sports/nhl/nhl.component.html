@@ -1,0 +1,83 @@
+<div class="hockey-container">
+  @if (!selectedTeam) {
+  <div class="team-selection-form">
+    <div class="form-group">
+      <label for="teamSelect">Select your team:</label>
+      <div class="custom-select" clickOutside (clickOutside)="closeDropdown()">
+        <div
+          class="selected-option"
+          (click)="toggleDropdown()"
+          [attr.aria-expanded]="isDropdownOpen"
+        >
+          <span>Select a team</span>
+          <span class="caret" [class.open]="isDropdownOpen"></span>
+        </div>
+
+        @if (isDropdownOpen) {
+        <div class="options-list">
+          @for (team of teams; track team.id) {
+          <div class="team-item" (click)="selectTeam(team)">
+            <img [src]="team.logo" [alt]="team.name" class="team-logo" />
+            <span>{{ team.location }} {{ team.name }}</span>
+          </div>
+          }
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+  } @else {
+  <button
+    class="select-team button"
+    style="margin-bottom: 1rem"
+    (click)="selectTeam(null)"
+  >
+    🔄 Change your team
+  </button>
+
+  @if (nextGame) {
+  <div class="game-container">
+    <div class="team home-team">
+      <img
+        [src]="nextGame.homeTeam.logo"
+        [alt]="nextGame.homeTeam.name"
+        class="team-logo"
+      />
+      <div class="team-info">
+        <span class="team-location">{{ nextGame.homeTeam.location }}</span>
+        <span class="team-name">{{ nextGame.homeTeam.name }}</span>
+        <span class="team-record">
+          ({{ nextGame.homeTeam.record.wins }}-{{
+            nextGame.homeTeam.record.losses
+          }}-{{ nextGame.homeTeam.record.otl }})
+        </span>
+      </div>
+    </div>
+
+    <div class="game-details">
+      <div class="game-time">{{ nextGame.timeUTC | date : "shortTime" }}</div>
+      <div class="game-date">{{ nextGame.date | date : "MMM d" }}</div>
+      <div class="venue">{{ nextGame.venue }}</div>
+    </div>
+
+    <div class="team away-team">
+      <img
+        [src]="nextGame.awayTeam.logo"
+        [alt]="nextGame.awayTeam.name"
+        class="team-logo"
+      />
+      <div class="team-info">
+        <span class="team-location">{{ nextGame.awayTeam.location }}</span>
+        <span class="team-name">{{ nextGame.awayTeam.name }}</span>
+        <span class="team-record">
+          ({{ nextGame.awayTeam.record.wins }}-{{
+            nextGame.awayTeam.record.losses
+          }}-{{ nextGame.awayTeam.record.otl }})
+        </span>
+      </div>
+    </div>
+  </div>
+  } @else {
+  <div class="no-games">No upcoming games scheduled</div>
+  } }
+</div>
