@@ -1,0 +1,62 @@
+@if (!selectedTeam) {
+<div class="team-selection-form">
+  <app-drop-down>
+    <span class="label">Select your team:</span>
+    <span class="placeholder">Select a team</span>
+    <span class="options">
+      @for (team of teams; track team.id) {
+      <div class="team-item" (click)="selectTeam(team)">
+        <img [src]="team.logo" [alt]="team.name" class="team-logo" />
+        <span>{{ team.location }} {{ team.name }}</span>
+      </div>
+      }
+    </span>
+  </app-drop-down>
+</div>
+} @if (game) {
+<div class="nhl-game-container">
+  @if (game.homeTeam) {
+  <div class="team home-team">
+    <img
+      [src]="game.homeTeam.logo"
+      [alt]="game.homeTeam.name"
+      class="team-logo"
+    />
+    <div class="team-info">
+      <span class="team-location">{{ game.homeTeam.location }}</span>
+      <span class="team-name">{{ game.homeTeam.name }}</span>
+      <span class="team-record">
+        ({{ game.homeTeam.record.wins }}-{{ game.homeTeam.record.losses }}-{{
+          game.homeTeam.record.otl
+        }})
+      </span>
+    </div>
+  </div>
+  }
+
+  <div class="game-details">
+    <div class="game-time">{{ game.timeUTC | date : "shortTime" }}</div>
+    <div class="game-date">{{ game.date | date : "MMM d" }}</div>
+    <div class="venue">{{ game.venue }}</div>
+  </div>
+
+  @if (game.awayTeam) {
+  <div class="team away-team">
+    <img
+      [src]="game.awayTeam.logo"
+      [alt]="game.awayTeam.name"
+      class="team-logo"
+    />
+    <div class="team-info">
+      <span class="team-location">{{ game.awayTeam.location }}</span>
+      <span class="team-name">{{ game.awayTeam.name }}</span>
+      <span class="team-record">
+        ({{ game.awayTeam.record.wins }}-{{ game.awayTeam.record.losses }}-{{
+          game.awayTeam.record.otl
+        }})
+      </span>
+    </div>
+  </div>
+  }
+</div>
+}

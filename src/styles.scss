@@ -1,12 +1,30 @@
 :root {
   // ... existing variables ...
   --surface-card: #ffffff; // Light theme
+  --primary-color: #2196f3; // A vibrant blue
+  --accent-color: #ff4081; // Pink accent
+  --text-primary: #212121; // Near black for main text
+  --text-secondary: #757575; // Medium gray for secondary text
+  --text-tertiary: #9e9e9e; // Lighter gray for tertiary text
+  --text-primary-on-dark: #ffffff; // White text for dark backgrounds
+  --text-secondary-on-dark: #e0e0e0; // Light gray for secondary text on dark
+  --text-tertiary-on-dark: #bdbdbd; // Medium gray for tertiary text on dark
+  --surface-dark: #2c2c34; // Dark surface color for light theme
 }
 
 // For dark theme (if applicable)
 [data-theme="dark"] {
   // ... existing dark theme variables ...
   --surface-card: #1e1e1e; // Dark theme
+  --primary-color: #64b5f6; // Lighter blue for dark theme
+  --accent-color: #ff80ab; // Lighter pink for dark theme
+  --text-primary: #ffffff; // White for main text
+  --text-secondary: #b0bec5; // Light blue-gray for secondary text
+  --text-tertiary: #78909c; // Darker blue-gray for tertiary text
+  --text-primary-on-dark: #ffffff; // Keeping consistent for dark theme
+  --text-secondary-on-dark: #e0e0e0;
+  --text-tertiary-on-dark: #bdbdbd;
+  --surface-dark: #1a1a1f; // Darker surface color for dark theme
 }
 
 @keyframes glow {
@@ -38,18 +56,6 @@
     url("/assets/fonts/gravity-ultralight.otf") format("opentype"),
     url("/assets/fonts/gravity-ultralightitalic.otf") format("opentype");
   font-display: swap;
-}
-
-@keyframes game-alert {
-  0% {
-    border: 5em solid #db222a;
-  }
-  50% {
-    border: 5em solid rgba(219, 34, 42, 0.5);
-  }
-  100% {
-    border: 5em solid #db222a;
-  }
 }
 
 html,
@@ -87,42 +93,4 @@ body {
     box-shadow: none;
     animation: none;
   }
-}
-
-.game-alert {
-  border: 5em solid transparent;
-
-  &.active {
-    animation: game-alert 2s infinite;
-  }
-}
-
-.game-alert-controls {
-  position: absolute;
-  top: 23px;
-  right: 80px;
-  display: flex;
-  gap: 10px;
-  z-index: 1000;
-}
-
-.game-alert-countdown {
-  position: absolute;
-  top: 40px;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 1em;
-  border-radius: 0.5em;
-  font-size: 1.2em;
-  font-weight: bold;
-  text-align: center;
-  z-index: 1000;
-}
-
-.game-alert-volume {
-  width: 100px;
-  margin: 0 10px;
-  vertical-align: middle;
 }

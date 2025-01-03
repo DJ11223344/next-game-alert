@@ -1,34 +1,29 @@
 import { Routes } from '@angular/router';
+import { GameComponent } from './game/game.component';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'nhl',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
   {
-    path: 'nhl',
+    path: 'home',
     loadComponent: () =>
-      import('./sports/nhl/nhl.component').then((m) => m.NhlComponent),
-    title: 'NHL',
-  },
-  {
-    path: 'nfl',
-    loadComponent: () =>
-      import('./sports/nfl/nfl.component').then((m) => m.NflComponent),
-    title: 'NFL',
-  },
-  {
-    path: 'nba',
-    loadComponent: () =>
-      import('./sports/nba/nba.component').then((m) => m.NbaComponent),
-    title: 'NBA',
-  },
-  {
-    path: 'configuration',
-    loadComponent: () =>
-      import('./components/configuration/configuration.component').then(
-        (m) => m.ConfigurationComponent
+      import('./shared/components/home/home.component').then(
+        (m) => m.HomeComponent
       ),
+  },
+  {
+    path: 'preferences',
+    loadComponent: () =>
+      import('./preferences/preferences.component').then(
+        (m) => m.PreferencesComponent
+      ),
+  },
+  {
+    path: 'game',
+    component: GameComponent,
+    loadChildren: () => import('./game/game.routes').then((m) => m.routes),
   },
 ];

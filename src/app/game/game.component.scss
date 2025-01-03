@@ -1,0 +1,51 @@
+$border-radius: 8px;
+
+@keyframes spin {
+  from {
+    --angle: 0deg;
+  }
+  to {
+    --angle: 360deg;
+  }
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.game-container {
+  position: relative;
+  margin: 5em;
+  border-radius: $border-radius;
+
+  &.alert {
+    &::after,
+    &::before {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background-image: conic-gradient(
+        from var(--angle),
+        rgb(200, 16, 46),
+        rgb(4, 30, 66),
+        white,
+        rgb(200, 16, 46)
+      );
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+      padding: 2em;
+      border-radius: $border-radius;
+      animation: 3s spin linear infinite;
+    }
+
+    &::before {
+      filter: blur(1.5rem);
+      opacity: 0.5;
+    }
+  }
+}

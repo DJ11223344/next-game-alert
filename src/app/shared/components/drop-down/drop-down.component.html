@@ -1,0 +1,26 @@
+<div class="form-group">
+  <ng-content select=".label"></ng-content>
+  <div class="custom-select" clickOutside (clickOutside)="closeDropdown()">
+    <div
+      class="selected-option"
+      (click)="toggleDropdown()"
+      [attr.aria-expanded]="isDropdownOpen"
+    >
+      <ng-content select=".placeholder"></ng-content>
+
+      <span class="caret" [class.open]="isDropdownOpen"></span>
+    </div>
+
+    @if (isDropdownOpen) {
+    <div class="options-list">
+      <ng-content select=".options"></ng-content>
+      <!-- @for (option of ; track team.id) {
+        <div class="team-item" (click)="selectTeam(team)">
+          <img [src]="team.logo" [alt]="team.name" class="team-logo" />
+          <span>{{ team.location }} {{ team.name }}</span>
+        </div>
+        } -->
+    </div>
+    }
+  </div>
+</div>

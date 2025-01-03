@@ -1,0 +1,39 @@
+<nav class="navigation">
+  <ul class="navigation__list">
+    <li class="navigation__item">
+      <a
+        routerLink="/game/nhl"
+        routerLinkActive="navigation__link--active"
+        class="navigation__link"
+      >
+        <img class="navigation__logo" [src]="nhlLogoUrl" alt="NHL Logo" />
+        NHL
+      </a>
+    </li>
+    <li class="navigation__item">
+      <a
+        routerLink="/game/nfl"
+        routerLinkActive="navigation__link--active"
+        class="navigation__link"
+      >
+        <img
+          class="navigation__logo"
+          [src]="nflLogoUrl"
+          alt="NFL Logo"
+          style="transform: scale(0.8)"
+        />
+        NFL
+      </a>
+    </li>
+    <li class="navigation__item">
+      <a
+        routerLink="/preferences"
+        routerLinkActive="navigation__link--active"
+        class="navigation__link"
+      >
+        <span class="navigation__logo">⚙️</span>
+        Preferences
+      </a>
+    </li>
+  </ul>
+</nav>

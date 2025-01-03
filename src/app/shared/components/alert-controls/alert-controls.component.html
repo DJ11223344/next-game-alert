@@ -1,0 +1,17 @@
+<div class="alert-controls" *ngIf="showControls">
+  <button class="button" *ngIf="audio" (click)="stopAudio()">⏹️ Stop</button>
+
+  <button class="button" (click)="toggleMute()">
+    {{ isMuted ? "🔇 Unmute" : "🔊 Mute" }}
+  </button>
+
+  <input
+    type="range"
+    class="volume"
+    min="0"
+    max="1"
+    step="0.01"
+    [value]="volume"
+    (input)="updateVolume($event)"
+  />
+</div>

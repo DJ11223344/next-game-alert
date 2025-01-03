@@ -1,80 +1,88 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { UserPreferences, CacheEntry } from './app.models';
-import { DurationInMs } from './app.models';
+import { Router } from '@angular/router';
+
+import { NhlService } from './shared/services/nhl.service';
+import { CacheService } from './shared/services/cache.service';
+import { UserService } from './shared/services/user.service';
+import { GameService } from './shared/services/game.service';
+import { Sport, Game, DurationInMs, NhlTeam } from './shared/models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppService {
-  private readonly CACHE_DURATION = DurationInMs.ONE_MINUTE;
-  private readonly CACHE_PREFIX = 'app_cache_';
+  constructor(
+    private cacheService: CacheService,
+    private userService: UserService,
+    private router: Router,
+    private nhlService: NhlService,
+    private gameService: GameService
+  ) {}
 
-  constructor(private http: HttpClient) {}
+  findNextGame(): { game: Game; sport: Sport } | null {
+    const selectedTeam = {
+      nhl: this.userService.getSelectedTeam(Sport.NHL),
+      nfl: this.userService.getSelectedTeam(Sport.NFL),
+      nba: this.userService.getSelectedTeam(Sport.NBA),
+    };
+    let nextGame: Game | null = null;
+    let nextGameSport: Sport | null = null;
 
-  private getCacheKey(url: string): string {
-    return this.CACHE_PREFIX + btoa(url);
-  }
+    // Check NHL games
+    if (selectedTeam.nhl) {
+      const earliestNHLGame = this.nhlService.getNextGame(
+        selectedTeam.nhl as NhlTeam
+      );
 
-  storeUserPreferences(preferences: UserPreferences): void {
-    localStorage.setItem('userPreferences', JSON.stringify(preferences));
-  }
-
-  getUserPreferences(): UserPreferences {
-    const preferences = localStorage.getItem('userPreferences');
-    return preferences
-      ? JSON.parse(preferences)
-      : { isMuted: false, selectedTeam: { nhl: null, nba: null, nfl: null } };
-  }
-
-  getCachedData<T>(url: string): Observable<T> | null {
-    const cacheKey = this.getCacheKey(url);
-    const cached = localStorage.getItem(cacheKey);
-
-    if (cached) {
-      const entry: CacheEntry = JSON.parse(cached);
-      if (entry.expiresAt > Date.now()) {
-        return of(entry.data);
-      } else {
-        // Clean up expired cache entry
-        localStorage.removeItem(cacheKey);
+      if (
+        !nextGame ||
+        (earliestNHLGame &&
+          new Date(earliestNHLGame.timeUTC) <
+            new Date((nextGame as Game).timeUTC))
+      ) {
+        nextGame = earliestNHLGame;
+        this.cacheService.cacheData(
+          `${Sport.NHL}-next-game`,
+          nextGame,
+          DurationInMs.ONE_DAY
+        );
       }
     }
+
+    // Check NFL games
+    if (
+      selectedTeam.nfl &&
+      selectedTeam.nfl.schedule &&
+      selectedTeam.nfl.schedule.length > 0
+    ) {
+      const futureGames = this.gameService.getFutureGames(
+        selectedTeam.nfl.schedule
+      );
+      if (futureGames.length > 0) {
+        nextGameSport = Sport.NFL;
+        const earliestNFL = futureGames[0];
+        if (
+          !nextGame ||
+          new Date(earliestNFL.timeUTC) < new Date((nextGame as Game).timeUTC)
+        ) {
+          nextGame = earliestNFL;
+          this.cacheService.cacheData(
+            `${Sport.NFL}-next-game`,
+            nextGame,
+            DurationInMs.ONE_DAY
+          );
+        }
+      }
+    }
+
+    if (nextGame && nextGameSport) {
+      return { game: nextGame, sport: nextGameSport };
+    }
+
     return null;
   }
 
-  cacheData(
-    url: string,
-    data: any,
-    duration: number = this.CACHE_DURATION
-  ): void {
-    const cacheKey = this.getCacheKey(url);
-    const entry: CacheEntry = {
-      expiresAt: Date.now() + duration,
-      data,
-    };
-    localStorage.setItem(cacheKey, JSON.stringify(entry));
-  }
-
-  getWithCache<T>(
-    url: string,
-    duration: number = this.CACHE_DURATION
-  ): Observable<T> {
-    const cached = this.getCachedData<T>(url);
-    if (cached) {
-      return cached;
-    }
-
-    return new Observable<T>((observer) => {
-      this.http.get<T>(url).subscribe({
-        next: (data) => {
-          this.cacheData(url, data, duration);
-          observer.next(data);
-          observer.complete();
-        },
-        error: (error) => observer.error(error),
-      });
-    });
+  showNextGame(game: Game, sport: Sport) {
+    this.router.navigate(['game', sport], { state: { game } });
   }
 }

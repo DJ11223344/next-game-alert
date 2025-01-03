@@ -1,0 +1,48 @@
+@if (isActive) {
+<div class="countdown-container">
+  <div style="margin-bottom: 0.5rem">Game starting in</div>
+  <div class="time-display">
+    @if (years > 0) {
+    <div class="time-unit">
+      <span class="number">{{ years }}</span>
+      <span class="label">years</span>
+    </div>
+
+    <div class="separator">:</div>
+    } @if (months > 0) {
+    <div class="time-unit">
+      <span class="number">{{ months }}</span>
+      <span class="label">months</span>
+    </div>
+
+    <div class="separator">:</div>
+    }
+
+    <div class="time-unit">
+      <span class="number">{{ days }}</span>
+      <span class="label">days</span>
+    </div>
+
+    <div class="separator">:</div>
+
+    <div class="time-unit">
+      <span class="number">{{ hours }}</span>
+      <span class="label">hours</span>
+    </div>
+
+    <div class="separator">:</div>
+
+    <div class="time-unit">
+      <span class="number">{{ minutes }}</span>
+      <span class="label">minutes</span>
+    </div>
+
+    <div class="separator">:</div>
+
+    <div class="time-unit">
+      <span class="number">{{ seconds }}</span>
+      <span class="label">seconds</span>
+    </div>
+  </div>
+</div>
+}

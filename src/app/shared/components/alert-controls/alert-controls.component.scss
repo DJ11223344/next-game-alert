@@ -1,0 +1,15 @@
+.alert-controls {
+  position: absolute;
+  top: -57px;
+  right: 70px;
+  display: flex;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.volume {
+  width: 100px;
+  margin: 0 10px;
+  vertical-align: middle;
+  cursor: pointer;
+}
