@@ -1,4 +1,8 @@
 .app-container {
   position: relative;
   margin-top: 5em;
+
+  &__content {
+    margin: 10em 5em;
+  }
 }

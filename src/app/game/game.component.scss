@@ -16,8 +16,6 @@ $border-radius: 8px;
 }
 
 .game-container {
-  position: relative;
-  margin: 5em;
   border-radius: $border-radius;
 
   &.alert {
@@ -29,10 +27,11 @@ $border-radius: 8px;
       width: 100%;
       background-image: conic-gradient(
         from var(--angle),
-        rgb(200, 16, 46),
-        rgb(4, 30, 66),
-        white,
-        rgb(200, 16, 46)
+        var(--team-primary),
+        var(--team-secondary),
+        var(--team-tertiary),
+        var(--team-secondary),
+        var(--team-primary)
       );
       top: 50%;
       left: 50%;

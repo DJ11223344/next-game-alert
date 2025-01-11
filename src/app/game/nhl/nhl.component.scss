@@ -11,6 +11,7 @@ $border-radius: 8px;
   max-height: 58vh;
   background-color: #c8c8d0;
   border-radius: $border-radius;
+  overflow: hidden;
 
   .team {
     display: flex;

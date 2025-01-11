@@ -1,0 +1,65 @@
+.logo {
+  background: white;
+  border-radius: 18px;
+
+  &.small {
+    width: 32px;
+    height: 32px;
+  }
+
+  &.medium {
+    width: 48px;
+    height: 48px;
+  }
+
+  &.large {
+    width: 64px;
+    height: 64px;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .logo-circle {
+    fill: none;
+    stroke: var(--team-primary, var(--surface-dark));
+    stroke-width: 4;
+  }
+
+  .clock-hand {
+    stroke: var(--team-secondary, var(--accent-color));
+    stroke-width: 4;
+    stroke-linecap: round;
+  }
+
+  .center-dot {
+    fill: var(--team-primary, var(--surface-dark));
+  }
+
+  .alert-wave {
+    stroke: var(--primary-color, var(--surface-dark));
+    stroke-width: 2;
+    opacity: 0.6;
+    animation: wave 2s infinite;
+  }
+
+  .alert-wave:nth-child(2) {
+    animation-delay: 0.5s;
+  }
+}
+
+@keyframes wave {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}

@@ -1,4 +1,4 @@
-import { Component, effect } from '@angular/core';
+import { Component, effect, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -9,6 +9,7 @@ import { NhlService } from '../../shared/services/nhl.service';
 import { UserService } from '../../shared/services/user.service';
 import { GameService } from '../../shared/services/game.service';
 import { DropDownComponent } from '../../shared/components/drop-down/drop-down.component';
+import { NHL_TEAM_COLORS } from './team-colors';
 
 @Component({
   selector: 'app-nhl',
@@ -18,7 +19,7 @@ import { DropDownComponent } from '../../shared/components/drop-down/drop-down.c
   templateUrl: './nhl.component.html',
   styleUrl: './nhl.component.scss',
 })
-export class NhlComponent {
+export class NhlComponent implements OnDestroy {
   protected game!: NhlGame;
 
   protected alert: boolean = false;
@@ -56,12 +57,16 @@ export class NhlComponent {
         `${Sport.NHL}-next-game`
       ) as NhlGame;
 
-      if (this.game) {
+      if (this.game && this.selectedTeam) {
         this.loadGame(this.game);
+        this.updateTeamColors(this.selectedTeam.id as string);
       }
     });
 
     this.selectedTeam = this.userService.getSelectedTeam(Sport.NHL) as NhlTeam;
+    if (this.selectedTeam) {
+      this.updateTeamColors(this.selectedTeam.id as string);
+    }
   }
 
   ngOnInit() {
@@ -78,7 +83,8 @@ export class NhlComponent {
 
   selectTeam(team: NhlTeam): void {
     this.selectedTeam = team as NhlTeam;
-    this.getTeamSchedule(team, '20242025'); // TODO: Get the current season ID
+    this.updateTeamColors(team.id as string);
+    this.getTeamSchedule(team, '20242025');
   }
 
   getTeamSchedule(team: NhlTeam, seasonId: string): void {
@@ -122,5 +128,20 @@ export class NhlComponent {
     this.game.homeTeam = this.findTeam(this.game.homeTeamId) as NhlTeam;
     this.game.awayTeam = this.findTeam(this.game.awayTeamId) as NhlTeam;
     this.countdownService.startCountdown(new Date(this.game.timeUTC));
+  }
+
+  private updateTeamColors(teamAbbrev: string): void {
+    const colors = NHL_TEAM_COLORS[teamAbbrev];
+    if (colors) {
+      const root = document.documentElement;
+      root.style.setProperty('--team-primary', colors.primary);
+      root.style.setProperty('--team-secondary', colors.secondary);
+      root.style.setProperty('--team-tertiary', colors.tertiary);
+    }
+  }
+
+  ngOnDestroy(): void {
+    // Stop the countdown when leaving the NHL component
+    this.countdownService.stopCountdown();
   }
 }

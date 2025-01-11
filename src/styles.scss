@@ -68,6 +68,10 @@ body {
   margin: 0;
   background-color: #2c2c34;
   overflow: hidden;
+
+  &.overflow {
+    overflow: auto;
+  }
 }
 
 .button {

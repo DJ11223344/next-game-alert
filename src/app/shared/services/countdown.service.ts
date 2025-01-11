@@ -11,15 +11,21 @@ export class CountdownService {
   minutes = signal(0);
   seconds = signal(0);
   timeLeft = signal(0);
+  isActive = signal(false);
 
   private endDate: Date = new Date();
   private timerInterval: any;
 
   constructor() {}
 
+  ngOnDestroy(): void {
+    this.stopCountdown();
+  }
+
   startCountdown(endDate: Date): void {
     this.endDate = new Date(endDate);
     this.stopCountdown();
+    this.isActive.set(true);
 
     this.timerInterval = setInterval(() => {
       this.updateCountdown();
@@ -27,7 +33,7 @@ export class CountdownService {
       if (this.timeLeft() <= 0) {
         this.stopCountdown();
       }
-    }, 1000);
+    }, 100);
   }
 
   private updateCountdown(): void {
@@ -44,10 +50,19 @@ export class CountdownService {
     this.seconds.set(Math.floor((this.timeLeft() % (1000 * 60)) / 1000));
   }
 
-  private stopCountdown(): void {
+  public stopCountdown(): void {
     if (this.timerInterval) {
       clearInterval(this.timerInterval);
       this.timerInterval = null;
     }
+    this.isActive.set(false);
+
+    this.years.set(0);
+    this.months.set(0);
+    this.days.set(0);
+    this.hours.set(0);
+    this.minutes.set(0);
+    this.seconds.set(0);
+    this.timeLeft.set(0);
   }
 }

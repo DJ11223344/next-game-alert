@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+
+import { CountdownService } from '../../shared/services/countdown.service';
 
 @Component({
   selector: 'app-nfl',
@@ -6,4 +8,10 @@ import { Component } from '@angular/core';
   templateUrl: './nfl.component.html',
   styleUrl: './nfl.component.scss',
 })
-export class NflComponent {}
+export class NflComponent implements OnDestroy {
+  constructor(private countdownService: CountdownService) {}
+
+  ngOnDestroy(): void {
+    this.countdownService.stopCountdown();
+  }
+}

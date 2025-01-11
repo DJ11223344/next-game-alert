@@ -2,6 +2,18 @@
   <ul class="navigation__list">
     <li class="navigation__item">
       <a
+        routerLink="/"
+        routerLinkActive="navigation__link--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="navigation__link"
+      >
+        <app-logo size="small"></app-logo>
+        Next Game Alert
+      </a>
+    </li>
+
+    <li class="navigation__item">
+      <a
         routerLink="/game/nhl"
         routerLinkActive="navigation__link--active"
         class="navigation__link"
@@ -37,3 +49,7 @@
     </li>
   </ul>
 </nav>
+
+<div class="navigation__controls">
+  <app-alert-controls></app-alert-controls>
+</div>

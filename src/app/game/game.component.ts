@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+interface TeamColors {
+  primary: string;
+  secondary: string;
+  tertiary: string;
+}
+
 @Component({
   selector: 'app-game',
   imports: [RouterModule],

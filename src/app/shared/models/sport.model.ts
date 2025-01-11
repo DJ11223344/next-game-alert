@@ -31,6 +31,12 @@ export interface TeamSchedule {
   nextGame: any;
 }
 
+export interface TeamColors {
+  primary: string;
+  secondary: string;
+  tertiary: string;
+}
+
 // Specific to NHL
 export interface NhlRecord extends Record {
   ties?: number;

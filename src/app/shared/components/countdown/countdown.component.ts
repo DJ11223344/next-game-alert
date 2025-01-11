@@ -1,5 +1,6 @@
-import { Component, Input, effect, SimpleChanges } from '@angular/core';
+import { Component, effect, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { CountdownService } from '../../services/countdown.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { CountdownService } from '../../services/countdown.service';
   imports: [CommonModule],
   providers: [],
 })
-export class CountdownComponent {
+export class CountdownComponent implements OnDestroy {
   years: number = 0;
   months: number = 0;
   days: number = 0;
@@ -28,10 +29,11 @@ export class CountdownComponent {
       this.hours = this.countdownService.hours();
       this.minutes = this.countdownService.minutes();
       this.seconds = this.countdownService.seconds();
+      this.isActive = this.countdownService.isActive();
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
+  ngOnDestroy(): void {
+    this.countdownService.stopCountdown();
   }
 }

@@ -1,0 +1,74 @@
+<div class="home-container">
+  <section class="hero">
+    <p class="tagline">Never miss another game of your favorite team</p>
+  </section>
+
+  <section class="features">
+    <h2>What We Offer</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3>Game Countdown</h3>
+        <p>Real-time countdown to your team's next game</p>
+        <img
+          class="feature-icon"
+          ngSrc="/assets/images/home/kenny-eliason-KYxXMTpTzek-unsplash.webp"
+          alt="Game Countdown"
+          width="182"
+          height="120"
+          priority
+        />
+      </div>
+      <div class="feature-card">
+        <h3>Smart Alerts</h3>
+        <p>Get notified 15 minutes before game time</p>
+        <img
+          class="feature-icon"
+          ngSrc="/assets/images/home/david-huck-6_a4IzF9fYA-unsplash.webp"
+          alt="Alarm bells"
+          width="120"
+          height="120"
+          priority
+        />
+      </div>
+      <div class="feature-card">
+        <h3>Multi-Sport Support</h3>
+        <p>Follow your teams across NHL, NFL, and NBA</p>
+        <img
+          class="feature-icon"
+          ngSrc="/assets/images/home/elizabeth-dunne-Bm7K7r5IaAU-unsplash.webp"
+          alt="Assorted balls"
+          width="120"
+          height="120"
+          priority
+        />
+      </div>
+      <div class="feature-card">
+        <h3>Easy Setup</h3>
+        <p>Select your team and you're ready to go</p>
+        <img
+          class="feature-icon"
+          ngSrc="/assets/images/home/nick-morrison-FHnnjk1Yj7Y-unsplash.webp"
+          alt="Computer and notebook"
+          width="120"
+          height="120"
+          priority
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="roadmap">
+    <h2>Coming Soon</h2>
+    <ul class="roadmap-list">
+      @for (item of roadmapItems; track $index) {
+      <li class="roadmap-item">{{ item }}</li>
+      }
+    </ul>
+  </section>
+
+  <section class="cta">
+    <h2>Get Started</h2>
+    <p>Select your favorite team and start tracking their games</p>
+    <a routerLink="/preferences" class="cta-button">Choose Your Team</a>
+  </section>
+</div>
