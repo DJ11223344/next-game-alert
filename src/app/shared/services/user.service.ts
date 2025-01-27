@@ -55,7 +55,7 @@ export class UserService {
     this.cacheService.cacheData(
       `${sport}-selected-team`,
       selectedTeam,
-      DurationInMs.ONE_MINUTE
+      DurationInMs.ONE_HOUR * 6
     );
   }
 
