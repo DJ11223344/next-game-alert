@@ -1,5 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 
+import { environment } from '../../../environments/environment';
 import { DurationInMs, NhlTeam, Sport } from '../../shared/models';
 import { CacheService } from '../../shared/services/cache.service';
 import { GameService } from './game.service';
@@ -8,8 +9,8 @@ export const NHL_LOGO_URL =
   'https://assets.nhle.com/logos/nhl/svg/NHL_light.svg';
 
 export const NHL_API = {
-  STANDINGS: `nhlapi/v1/standings/DATE`,
-  SEASON_SCHEDULE: `nhlapi/v1/club-schedule-season/TEAM_ABBV/SEASON_ID`,
+  STANDINGS: `${environment.nhlApiUrl}/v1/standings/DATE`,
+  SEASON_SCHEDULE: `${environment.nhlApiUrl}/v1/club-schedule-season/TEAM_ABBV/SEASON_ID`,
 };
 
 @Injectable({
@@ -46,7 +47,7 @@ export class NhlService {
       'DATE',
       new Date().toISOString().slice(0, 10)
     );
-    return this.cacheService.getWithCache(url, DurationInMs.ONE_MINUTE * 30);
+    return this.cacheService.getWithCache(url, DurationInMs.ONE_HOUR);
   }
 
   getTeams() {
@@ -96,7 +97,7 @@ export class NhlService {
       'TEAM_ABBV',
       teamAbbrev
     ).replace('SEASON_ID', seasonId);
-    return this.cacheService.getWithCache(url, DurationInMs.ONE_MINUTE * 30);
+    return this.cacheService.getWithCache(url, DurationInMs.ONE_HOUR);
   }
 
   getNextGame(team: NhlTeam) {
